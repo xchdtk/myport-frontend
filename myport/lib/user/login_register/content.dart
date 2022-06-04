@@ -1,10 +1,16 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class LoginRegisterContentWidget extends StatelessWidget {
+  final Widget image_widget;
   final List<String> title;
   final List<String> description;
   const LoginRegisterContentWidget(
-      {required this.title, required this.description, Key? key})
+      {required this.image_widget,
+      required this.title,
+      required this.description,
+      Key? key})
       : super(key: key);
 
   @override
@@ -13,17 +19,9 @@ class LoginRegisterContentWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.only(
-              left: width * 0.16,
-              right: width * 0.17066666666,
-              top: height * 0.12068965517,
-              bottom: height * 0.06157635467),
-          child: Image.asset('asset/images/login_register_image_1.png',
-              width: width * 0.66933333333, height: height * 0.30911330049),
-        ),
         Column(
           children: [
+            image_widget,
             Text(
               title[0],
               style: TextStyle(
