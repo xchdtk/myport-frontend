@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myport/controller/register.dart';
-import 'package:myport/user/login_register/register/phone_number_register.dart';
-import 'package:myport/user/login_register/register/title_widget.dart';
+import 'package:myport/on_boarding/register/title_widget.dart';
 
 const page_number = "1 / 4";
-const title = ["이름을", "입력해주세요"];
+const title = ["이름을", "입력해 주세요"];
+RegExp regExp = RegExp(r"^[ㄱ-ㅎ가-힣]*$");
 
 class InputNameScreen extends StatefulWidget {
   const InputNameScreen({Key? key}) : super(key: key);
@@ -18,6 +18,24 @@ class InputNameScreen extends StatefulWidget {
 
 class _InputNameScreenState extends State<InputNameScreen> {
   final check_name_controller = Get.put(RegisterInformationNameController());
+  final textform_field_controller = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    textform_field_controller.addListener(() {
+      if (textform_field_controller.text.length < 2 ||
+          textform_field_controller.text.length > 4 ||
+          !regExp.hasMatch(textform_field_controller.text)) {
+        check_name_controller.updateStateButton(false);
+        return;
+      }
+      check_name_controller.updateName(textform_field_controller.text);
+      check_name_controller.updateStateButton(true);
+      return;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +58,13 @@ class _InputNameScreenState extends State<InputNameScreen> {
               ),
               TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  onChanged: (value) {
-                    if (value.length < 10) {
-                      check_name_controller.updateStateButton(false);
-                      return;
-                    }
-                    check_name_controller.updateName(value);
-                    check_name_controller.updateStateButton(true);
-                    return;
-                  },
+                  controller: textform_field_controller,
                   validator: (value) {
-                    if (value!.length < 10) {
-                      return '10자이상 및 영문 및 특수문자 및 숫자를 포함시켜주세요.';
+                    if (value!.length < 2 || value.length > 4) {
+                      return '2자리 이상 및 4자리 이하로 이름을 설정해주세요';
+                    }
+                    if (!regExp.hasMatch(value)) {
+                      return '한글만 사용해주세요';
                     }
                     return null;
                   },
@@ -75,7 +88,7 @@ class _InputNameScreenState extends State<InputNameScreen> {
                     () => ElevatedButton(
                       onPressed: check_name_controller.is_button_disabled.value
                           ? () {
-                              Get.to(const InputPhoneNumberScreen());
+                              Get.toNamed('register/phone');
                             }
                           : null,
                       style: ElevatedButton.styleFrom(

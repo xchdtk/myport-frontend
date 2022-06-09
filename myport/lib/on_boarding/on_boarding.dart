@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myport/user/login_register/register/name_register.dart';
-import '../../controller/login_register.dart';
+import 'package:myport/on_boarding/register/local_join_name.dart';
+import '../controller/login_register.dart';
 import 'content.dart';
 
 // ignore: non_constant_identifier_names
@@ -181,7 +181,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                           height: height * 0.06773399014,
                           child: OutlinedButton(
                             onPressed: () {
-                              Get.to(const InputNameScreen());
+                              Get.toNamed('/register/common/two');
                             },
                             style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
