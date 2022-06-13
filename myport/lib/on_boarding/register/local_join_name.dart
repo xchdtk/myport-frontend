@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myport/controller/register.dart';
 import 'package:myport/on_boarding/register/title_widget.dart';
+import 'package:myport/textform_widget.dart';
 
 const page_number = "1 / 4";
 const title = ["이름을", "입력해 주세요"];
@@ -56,30 +57,25 @@ class _InputNameScreenState extends State<InputNameScreen> {
               const SizedBox(
                 height: 32,
               ),
-              TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: textform_field_controller,
-                  validator: (value) {
-                    if (value!.length < 2 || value.length > 4) {
-                      return '2자리 이상 및 4자리 이하로 이름을 설정해주세요';
-                    }
-                    if (!regExp.hasMatch(value)) {
-                      return '한글만 사용해주세요';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    hintText: "이름 입력",
-                    hintStyle:
-                        TextStyle(fontSize: 21, color: Color(0xffEFF2FB)),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffEFF2FB))),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEFF2FB)),
-                    ),
-                  )),
-              const SizedBox(
-                height: 440,
+              TextFormWidget(
+                text: "이름 입력",
+                controller: textform_field_controller,
+                enabled: true,
+                validation: (value) {
+                  if (value!.length < 2 || value.length > 4) {
+                    return '2자리 이상 및 4자리 이하로 이름을 설정해주세요';
+                  }
+                  if (!regExp.hasMatch(value)) {
+                    return '한글만 사용해주세요';
+                  }
+                  return null;
+                },
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(
+                  height: height * 1.84545454545,
+                ),
               ),
               SizedBox(
                   width: width * 0.872,
@@ -99,6 +95,9 @@ class _InputNameScreenState extends State<InputNameScreen> {
                       child: const Text("다음으로"),
                     ),
                   )),
+              SizedBox(
+                height: height * 0.07881773399,
+              )
             ],
           ),
         ));

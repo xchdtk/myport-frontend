@@ -92,6 +92,7 @@ class _InputDateOfBirthScreenState extends State<InputDateOfBirthScreen> {
         child: Container(
           margin: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const RegisterInputTitleWidget(
@@ -166,8 +167,11 @@ class _InputDateOfBirthScreenState extends State<InputDateOfBirthScreen> {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 440,
+              Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: height * 0.54187192118,
+                ),
               ),
               Obx(
                 () => SizedBox(
@@ -188,6 +192,9 @@ class _InputDateOfBirthScreenState extends State<InputDateOfBirthScreen> {
                     child: const Text("다음으로"),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: height * 0.07881773399,
               )
             ],
           ),

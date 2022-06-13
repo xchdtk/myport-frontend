@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:myport/on_boarding/register/title_widget.dart';
+import 'package:myport/textform_widget.dart';
 
 import '../../../controller/register.dart';
-import 'local_join_date_of_birth.dart';
 
 const page_number = "2 / 4";
 const title = ["인증번호를", "입력해 주세요"];
@@ -94,6 +94,7 @@ class _InputPhoneNumberScreenState extends State<InputPhoneNumberScreen> {
           child: Container(
             margin: const EdgeInsets.only(left: 30, right: 30),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const RegisterInputTitleWidget(
@@ -190,31 +191,23 @@ class _InputPhoneNumberScreenState extends State<InputPhoneNumberScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                Obx(() => TextFormField(
-                    controller: textform_field_controller_list[1],
-                    focusNode: focus_node_list[1],
+                Obx(() => TextFormWidget(
                     enabled:
                         check_phone_number_controller.checked_click_button.value
                             ? true
                             : false,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                        hintText: "인증번호 입력",
-                        hintStyle:
-                            TextStyle(fontSize: 21, color: Color(0xffEFF2FB)),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Color(0xffEFF2FB), width: 2)),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xffEFF2FB), width: 2),
-                        ),
-                        disabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xffEFF2FB), width: 2),
-                        )))),
-                const SizedBox(
-                  height: 362,
+                    focus_node: focus_node_list[1],
+                    controller: textform_field_controller_list[1],
+                    keyboard_type: TextInputType.number,
+                    disable_border: const UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xffEFF2FB), width: 2),
+                    ))),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: SizedBox(
+                    height: height * 0.44581280788,
+                  ),
                 ),
                 Obx(
                   () => SizedBox(
@@ -235,6 +228,9 @@ class _InputPhoneNumberScreenState extends State<InputPhoneNumberScreen> {
                       child: const Text("다음으로"),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: height * 0.07881773399,
                 )
               ],
             ),

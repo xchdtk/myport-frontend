@@ -15,9 +15,7 @@ class UniversityController extends GetxController {
     isLoading(true);
     try {
       final universit_list = await RemoteServices.fetchUniversity();
-      if (university_list != null) {
-        university_list = universit_list;
-      }
+      university_list = universit_list;
     } finally {
       isLoading(false);
     }
@@ -27,20 +25,27 @@ class UniversityController extends GetxController {
   }
 
   void updateSerchUniversity(value) {
-    final university = university_list
-        .where((item) => item.university_name.contains(value))
-        .toList();
-    search_university_list(university);
+    if (value == "") {
+      search_university_list([]);
+    } else {
+      final university = university_list
+          .where((item) => item.university_name.contains(value))
+          .toList();
+      search_university_list(university);
+    }
   }
 
   void setMajor(value) {
-    print(value);
     major_list = value;
     update();
   }
 
   void updateSearchMajor(value) {
-    final major = major_list.where((item) => item.contains(value)).toList();
-    search_major_list(major);
+    if (value == "") {
+      search_major_list([]);
+    } else {
+      final major = major_list.where((item) => item.contains(value)).toList();
+      search_major_list(major);
+    }
   }
 }

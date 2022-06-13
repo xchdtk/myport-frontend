@@ -48,8 +48,11 @@ class CommonProcess_01 extends StatelessWidget {
             ),
             const Text("마이포트를 더 알차게 사용하기 위해", style: sub_title_text_style),
             const Text("몇 가지 정보를 더 물어볼게요", style: sub_title_text_style),
-            const SizedBox(
-              height: 144,
+            Flexible(
+              fit: FlexFit.tight,
+              child: SizedBox(
+                height: height * 0.17733990147,
+              ),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Image.asset('asset/images/login_register_image_6.png',
@@ -70,6 +73,9 @@ class CommonProcess_01 extends StatelessWidget {
                 child: const Text("다음으로"),
               ),
             ),
+            SizedBox(
+              height: height * 0.07881773399,
+            )
           ],
         ),
       ),

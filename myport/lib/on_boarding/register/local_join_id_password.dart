@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:myport/on_boarding/register/title_widget.dart';
+import 'package:myport/textform_widget.dart';
 
 const page_number = "4 / 4";
 const title = ["아이디와 비밀번호를", "입력해 주세요"];
@@ -48,6 +49,7 @@ class InputIdPasswordScreen extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const RegisterInputTitleWidget(
@@ -55,39 +57,26 @@ class InputIdPasswordScreen extends StatelessWidget {
               const SizedBox(
                 height: 32,
               ),
-              TextFormField(
-                  focusNode: focus_node_list[0],
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {},
-                  decoration: const InputDecoration(
-                    hintText: "아이디",
-                    hintStyle:
-                        TextStyle(fontSize: 21, color: Color(0xffEFF2FB)),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffEFF2FB))),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEFF2FB)),
-                    ),
-                  )),
+              TextFormWidget(
+                enabled: true,
+                focus_node: focus_node_list[0],
+                validation: (value) {},
+                text: "아이디",
+              ),
               const SizedBox(
                 height: 24,
               ),
-              TextFormField(
-                  focusNode: focus_node_list[1],
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {},
-                  decoration: const InputDecoration(
-                    hintText: "비밀번호",
-                    hintStyle:
-                        TextStyle(fontSize: 21, color: Color(0xffEFF2FB)),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffEFF2FB))),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffEFF2FB)),
-                    ),
-                  )),
-              const SizedBox(
-                height: 366,
+              TextFormWidget(
+                enabled: true,
+                focus_node: focus_node_list[1],
+                validation: (value) {},
+                text: "비밀번호",
+              ),
+              Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  height: height * 0.45073891625,
+                ),
               ),
               SizedBox(
                 width: width * 0.872,
@@ -104,6 +93,9 @@ class InputIdPasswordScreen extends StatelessWidget {
                   child: const Text("다음으로"),
                 ),
               ),
+              SizedBox(
+                height: height * 0.07881773399,
+              )
             ],
           ),
         ),

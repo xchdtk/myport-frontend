@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:myport/on_boarding/on_boarding.dart';
 import 'package:myport/on_boarding/register/common_process_01.dart';
 import 'package:myport/on_boarding/register/common_process_02.dart';
+import 'package:myport/on_boarding/register/common_process_04.dart';
 import 'package:myport/splash_screen.dart';
 
 import 'on_boarding/register/check_information_register.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/register/common/first', page: () => CommonProcess_01()),
         GetPage(name: '/register/common/two', page: () => CommonProcess02()),
         GetPage(name: '/register/common/third', page: () => CommonProcess03()),
+        GetPage(name: '/register/common/four', page: () => CommonProcess04()),
       ],
     );
   }

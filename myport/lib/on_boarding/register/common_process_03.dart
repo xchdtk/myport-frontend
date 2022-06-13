@@ -5,11 +5,15 @@ import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:myport/controller/register.dart';
 import 'package:myport/on_boarding/register/title_widget.dart';
+import 'package:myport/textform_widget.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 import '../../controller/university.dart';
 
 const page_number = 2;
 const title = ["전공과 학번을 알려주시면", "맞춤 정보를 제공해요"];
+const grade_list = ["14", "15", "16", "17", "18"];
 
 class CommonProcess03 extends StatelessWidget {
   CommonProcess03({Key? key}) : super(key: key);
@@ -21,6 +25,7 @@ class CommonProcess03 extends StatelessWidget {
       Get.put(RegisterInformationUniversityController());
   final register_grade_controller =
       Get.put(ReigsterInformationGradeController());
+
   final text_controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -52,108 +57,105 @@ class CommonProcess03 extends StatelessWidget {
           ]);
     }
 
-    void openBottomSheet() {
-      Get.bottomSheet(
-        Column(
-          children: [
-            const SizedBox(height: 20),
-            const Center(
-              child: Text(
-                'Bottom Sheet',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      );
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: KeyboardActions(
         config: _buildConfig(context),
         child: Container(
           margin: const EdgeInsets.only(left: 30, right: 30, bottom: 64),
+          height: height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const RegisterInputTitleWidget(
-                  page_number: "$page_number / 5", title: title),
+                  page_number: "$page_number / 4", title: title),
               const SizedBox(
                 height: 20,
               ),
               Obx(
-                () => register_major_controller.isSelect.value
-                    ? Column(
-                        children: [
-                          TextFormField(
-                              keyboardType: TextInputType.none,
-                              focusNode: register_grade_controller.focusNode,
-                              decoration: const InputDecoration(
-                                hintText: "학번 입력",
-                                hintStyle: TextStyle(
-                                    fontSize: 21, color: Color(0xffEFF2FB)),
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xffEFF2FB))),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xff428EFF),
-                                    width: 1.6,
+                () => Column(
+                  children: [
+                    register_major_controller.isSelect.value
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.bottomSheet(Container(
+                                  width: width,
+                                  height: 167,
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xffEFF2FB),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(24),
+                                          topRight: Radius.circular(24))),
+                                  child: Obx(() => ListWheelScrollView(
+                                        itemExtent: 30,
+                                        useMagnifier: true,
+                                        onSelectedItemChanged: (index) {
+                                          register_grade_controller.updateGrade(
+                                              index, grade_list[index]);
+
+                                          register_grade_controller
+                                              .changeIsSelect(true);
+                                        },
+                                        magnification: 1.2,
+                                        children: grade_list
+                                            .mapIndexed((index, item) => Text(
+                                                  item,
+                                                  style: TextStyle(
+                                                      color:
+                                                          register_grade_controller
+                                                                      .index
+                                                                      .value ==
+                                                                  index
+                                                              ? Colors.black
+                                                              : const Color(
+                                                                  0xff9B9B9B)),
+                                                ))
+                                            .toList(),
+                                      ))));
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Obx(
+                                  () => Text(
+                                    register_grade_controller
+                                            .grade.value.isEmpty
+                                        ? "학번 입력"
+                                        : "${register_grade_controller.grade.value}학번",
+                                    style: register_grade_controller
+                                            .grade.value.isEmpty
+                                        ? const TextStyle(
+                                            fontSize: 21,
+                                            color: Color(0xffEFF2FB))
+                                        : const TextStyle(
+                                            fontSize: 21, color: Colors.black),
                                   ),
                                 ),
-                              )),
-                          TextFormField(
-                              enabled: false,
-                              controller: text_controller,
-                              focusNode: register_major_controller.focusNode,
-                              decoration: const InputDecoration(
-                                hintText: "전공 입력",
-                                hintStyle: TextStyle(
-                                    fontSize: 21, color: Color(0xffEFF2FB)),
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xffEFF2FB))),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xff428EFF),
-                                    width: 1.6,
-                                  ),
+                                const SizedBox(
+                                  height: 12,
                                 ),
-                              )),
-                        ],
-                      )
-                    : TextFormField(
-                        enabled: true,
-                        onChanged: (value) {
-                          university_controller.updateSearchMajor(value);
-                        },
-                        controller: text_controller,
-                        focusNode: register_major_controller.focusNode,
-                        decoration: const InputDecoration(
-                          hintText: "전공 입력",
-                          hintStyle:
-                              TextStyle(fontSize: 21, color: Color(0xffEFF2FB)),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffEFF2FB))),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xff428EFF),
-                              width: 1.6,
+                                Container(
+                                  height: 1.6,
+                                  width: width,
+                                  color: const Color(0xffEFF2FB),
+                                )
+                              ],
                             ),
-                          ),
-                        )),
+                          )
+                        : const SizedBox(),
+                    TextFormWidget(
+                      enabled: register_major_controller.isSelect.value
+                          ? false
+                          : true,
+                      on_change: (value) {
+                        university_controller.updateSearchMajor(value);
+                      },
+                      controller: text_controller,
+                      focus_node: register_major_controller.focusNode,
+                      text: "전공 입력",
+                    )
+                  ],
+                ),
               ),
               SizedBox(
                   width: width,
@@ -202,17 +204,19 @@ class CommonProcess03 extends StatelessWidget {
                             ))
                         : Container(),
                   )),
-              const SizedBox(
-                height: 88,
+              const Expanded(
+                child: SizedBox(
+                  height: 88,
+                ),
               ),
               Obx(
                 () => SizedBox(
                   width: width * 0.872,
                   height: height * 0.06773399014,
                   child: ElevatedButton(
-                    onPressed: register_major_controller.isSelect.value
+                    onPressed: register_grade_controller.isSelect.value
                         ? () {
-                            Get.toNamed('/register/common/third');
+                            Get.toNamed('/register/common/four');
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
@@ -223,6 +227,9 @@ class CommonProcess03 extends StatelessWidget {
                     child: const Text("다음으로"),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: height * 0.07881773399,
               )
             ],
           ),

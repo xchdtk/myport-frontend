@@ -113,8 +113,11 @@ class CheckInformationScreen extends StatelessWidget {
             // information_widget("김진수"),
             // information_widget("010 - 9765 - 0441"),
             // information_widget("99년 07월 08일"),
-            SizedBox(
-              height: height * 0.2302955665,
+            Flexible(
+              fit: FlexFit.tight,
+              child: SizedBox(
+                height: height * 0.2302955665,
+              ),
             ),
             SizedBox(
               width: width * 0.872,
@@ -131,6 +134,9 @@ class CheckInformationScreen extends StatelessWidget {
                 child: const Text("다음으로"),
               ),
             ),
+            SizedBox(
+              height: height * 0.07881773399,
+            )
           ],
         ),
       ),

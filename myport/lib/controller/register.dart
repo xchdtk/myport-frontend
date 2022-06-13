@@ -165,20 +165,62 @@ class RegisterInformationMajorController extends GetxController {
 }
 
 class ReigsterInformationGradeController extends GetxController {
-  final FocusNode focusNode = FocusNode();
-  RxBool isFocus = false.obs;
-  late String grade;
-  late RxBool isSelect;
+  RxString grade = "".obs;
+  RxInt index = 0.obs;
+  RxBool isSelect = false.obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
-    focusNode.addListener(() {
-      if (focusNode.hasFocus) {
-        isFocus(true);
-      }
-    });
     super.onInit();
+    index = 0.obs;
+    grade = "".obs;
     isSelect = false.obs;
+  }
+
+  updateGrade(value_index, value_grade) {
+    index(value_index);
+    grade(value_grade);
+  }
+
+  void changeIsSelect(value) {
+    isSelect(value);
+  }
+}
+
+class ReigsterInformationInterestController extends GetxController {
+  late RxList is_select;
+  int select_count = 0;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    is_select = [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ].obs;
+  }
+
+  void changeInterest(index, value) {
+    if (!value || select_count < 3) {
+      is_select[index] = value;
+      if (value) {
+        select_count++;
+      } else if (!value) {
+        select_count--;
+      }
+    }
   }
 }
